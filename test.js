@@ -1,10 +1,10 @@
 rect(50,50,100,100,"black",1,"black",5);
-var b=getRect(200,0,300,300,"#00f",1,"white",5);
-var g=getRect(200,0,200,200,"#0f0",1,"white",5);
-var r=getRect(200,0,100,100,"#f00",1,"white",5);
-var labelR=getLabel(220,20,20,"","red","#fff");
-var labelG=getLabel(320,20,20,"","green","#fff");
-var labelB=getLabel(420,20,20,"","blue","#fff");
+var b=getRect(200,100,300,300,"#00f",1,"white",5);
+var g=getRect(200,100,200,200,"#0f0",1,"white",5);
+var r=getRect(400,100,100,100,"#f00",1,"white",5);
+var labelR=getLabel(420,120,20,"","red","#fff");
+var labelG=getLabel(220,120,20,"","green","#fff");
+var labelB=getLabel(220,380,20,"","blue","#fff");
 addChild(labelR,r);
 addChild(labelG,g);
 addChild(labelB,b);
@@ -18,7 +18,7 @@ function moveObj(){
 }
 
 function scale(){
-	changeSize(b,500,500,500);
+	changeSize(b,300,10,500);
 }
 
 function color(){
