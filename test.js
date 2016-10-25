@@ -1,3 +1,5 @@
+var test = "popopo";
+
 rect(50,50,100,100,"black",1,"black",5);
 var b=getRect(200,100,300,300,"#00f",1,"white",5);
 var g=getRect(200,100,200,200,"#0f0",1,"white",5);
