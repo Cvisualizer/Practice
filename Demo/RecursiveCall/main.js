@@ -35,9 +35,6 @@ function draw(phase){
 				label(riseX[phase-1],riseY[phase-1]-10,20,"futura","sub("+phase+")","#000");
 				var localX=getRect(riseX[phase-1]+5,riseY[phase-1],20,40,"#aaa",0.9);
 				var localY=getRect(riseX[phase-1]+40,riseY[phase-1],20,40,"#aaa",0.9);
-				var fn=getRect(900,670-100*phase,350,100,"#000",0.9,"#202f55",5);
-				var fnx=getRect(900,740-100*phase,350,20,"#00a1e9",0.9);
-				usedSpace+=100*phase;
 				addChild(labels[phase],rects[phase]);
 				addChild(localX,rects[phase]);
 				addChild(localY,rects[phase]);
