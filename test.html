@@ -12,6 +12,9 @@
 		<input type="button" value="push" onClick="pushRect()">
 		<input type="button" value="up" onClick="scUp()">
 		<input type="button" value="down" onClick="scDown()">
+		<br>
+		<input type="text" id="idx" value="0">
+		<input type="button" value="scroll" onClick="scrollRectsTo(parseInt(document.getElementById('idx').value))">
 		<script src="lib/snap.svg-min.js"></script>
 		<script src="lib/define.js"></script>
 		<script src="lib/tools.js"></script>
