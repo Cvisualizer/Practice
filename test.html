@@ -9,9 +9,7 @@
 		<input type="button" value="move" onClick="moveObj()">
 		<input type="button" value="reset" onClick="reset()">
 		<input type="button" value="create" onClick="createParent()">
-		<input type="button" value="push" onClick="pushRect()">
-		<input type="button" value="up" onClick="scUp()">
-		<input type="button" value="down" onClick="scDown()">
+		<input type="button" value="push" onClick="pushRect(group.children().length)">
 		<br>
 		<input type="text" id="idx" value="0">
 		<input type="button" value="scroll" onClick="scrollRectsTo(parseInt(document.getElementById('idx').value))">

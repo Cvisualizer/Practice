@@ -1,54 +1,88 @@
-var base = getRect(50,300, 300,1, "#000",1, "#000",0);
-var children = [null];
-var RECT_HEIGHT = 30;
+const RECT_WIDTH = 300;
+const RECT_HEIGHT = 30;
+const BASE_WIDTH = RECT_WIDTH;
+const BASE_HEIGHT = 300;
 
-for(var i=0; i<4; i++){
-	pushRect();
-}
+// 四角/ラベルを並べる親オブジェクト
+var base = getRect(0, BASE_HEIGHT, BASE_WIDTH, 0, "#000",0);
+// 四角用のグループ
+var group = svg.g().attr({mask: getRect(0, 0, BASE_WIDTH, BASE_HEIGHT, "#fff")});
+// ラベル用のグループ
+var labelGroup = svg.g().attr({mask: getRect(0, 0, BASE_WIDTH, BASE_HEIGHT, "#fff")});
 
-function pushRect(){
-	// draw
-	// いちいちマスクを作るという無駄なアレはなんとかしたいけどgroupをつくらないとなんともならなさそう
-	var rect = getRect(parseInt(base.node.getAttribute("x")),parseInt(base.node.getAttribute("y"))-RECT_HEIGHT*children.length, 300, RECT_HEIGHT, "#"+Math.floor(Math.random()*800)+100,1, "#000",0);
-	var frame = getRect(50, 50, 300, 250, "#aaa")
-	rect.attr({mask: frame});
+// 適当に幾つか追加
+for(var i=0; i<2+Math.random()*5; i++) pushRect(group.children().length);
+
+// 四角を追加する
+function pushRect(str){
+	// draw Rect
+	var rect = getRect(
+		parseInt(base.node.getAttribute("x")),
+		parseInt(base.node.getAttribute("y")) - RECT_HEIGHT*(group.children().length+1),
+		RECT_WIDTH,
+		RECT_HEIGHT,
+		"#"+Math.floor(Math.random()*800)+100 // color
+	);
+	// draw Label
+	var label = getLabel(
+		50,
+		parseInt(base.node.getAttribute("y")) - RECT_HEIGHT*(group.children().length+1) + 20,
+		20,
+		"",
+		str,
+		"#fff"
+	);
 	// append
 	addChild(rect, base);
-	children.push(rect);
+	addChild(label, rect);
+	group.append(rect);
+	labelGroup.append(label);
 	// scroll
-	if(children.length>8 || parseInt(base.node.getAttribute("y"))!=300){ // yの初期値の300
-		move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+RECT_HEIGHT, 100);
+	if(group.children().length>7 || parseInt(base.node.getAttribute("y"))!=BASE_HEIGHT){
+		scrollRectsTo(group.children().length-1);
 	}
+	return label;
 }
 
+// インデックス指定スクロール
 function scrollRectsTo(idx){
-	var shiftHeight = 50; //よしなにずらす
-	move(base, parseInt(base.node.getAttribute("x")), (children.length-idx)*RECT_HEIGHT+shiftHeight, 100);
+	var shiftHeight = 100; //よしなにずらす
+	move(base, parseInt(base.node.getAttribute("x")), idx*RECT_HEIGHT+shiftHeight, 100);
 }
 
-
-
-document.addEventListener("wheel" , function (e){
-	console.log(e.deltaY)
-	move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-RECT_HEIGHT*e.deltaY, 1);
+// ホイールスクロール
+group.node.addEventListener("wheel", function(e){
+	// 上にスクロール
+	if(e.deltaY<0 && parseInt(base.node.getAttribute("y"))<=RECT_HEIGHT*group.children().length+RECT_HEIGHT*4){
+		move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+RECT_HEIGHT, 10);
+	}
+	// 下にスクロール
+	if(e.deltaY>0){
+		if(BASE_HEIGHT<=parseInt(base.node.getAttribute("y"))-RECT_HEIGHT*1){
+			move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-RECT_HEIGHT, 10);
+		}else{
+			move(base, parseInt(base.node.getAttribute("x")), BASE_HEIGHT, 1); // 位置を修正
+		}
+	}
 });
 
+// ドラッグスクロール
+// 要素をひきずってしまうため、実装不可能な気が…
+/*
+var mouseY;
+document.addEventListener("mousedown", function(e){
+	mouseY = e.layerY;
+});
+group.node.addEventListener("mousemove", function(e){
+	if(e.buttons>0){
+		move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-(mouseY-e.layerY), 0);
+		mouseY = e.layerY;
+	}
+});
+*/
 
 
 
-
-
-
-
-
-
-function scUp(){
-	move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-RECT_HEIGHT, 100);
-}
-
-function scDown(){
-	move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+RECT_HEIGHT, 100);
-}
 
 /*
 rect(50,50,100,100,"black",1,"black",5);
