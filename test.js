@@ -1,4 +1,3 @@
-rect(50,50,100,100,"black",1,"black",5);
 var b=getRect(200,100,300,300,"#00f",1,"white",5);
 var g=getRect(200,100,200,200,"#0f0",1,"white",5);
 var r=getRect(400,100,100,100,"#f00",1,"white",5);
@@ -11,7 +10,12 @@ addChild(labelB,b);
 addChild(r,g);
 addChild(g,b);
 
-//move(g,100,0,100);
+/*
+矢印描画
+引数はx1,y1,x2,y2,幅、色
+*/
+drawArrow(490,110,350,110,5,"#f00");
+drawArrow(210,110,210,350,6,"#0f0");
 
 function moveObj(){
 	move(b,500,100,500);
@@ -22,7 +26,6 @@ function scale(){
 }
 
 function color(){
-	changeColor(rects[0],"#fff",1,500);
 	changeColor(r,"#0f0",1,500);
 	changeColor(g,"#00f",1,500);
 	changeColor(b,"#f00",1,500);
@@ -32,7 +35,6 @@ function color(){
 }
 
 function reset(){
-	changeColor(rects[0],"#000",1,0);
 	move(b,200,0,0);
 	changeSize(b,300,300,0);
 	changeColor(r,"#f00",1,0);
