@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+	#stackWrapper {
+		width: 400px;
+		height: 300px;
+		overflow-y: auto;
+		background-color: gray;
+	}
+
+	#stack {
+		width: 300px;
+		min-height: 300px;
+		display: flex;
+		flex-direction: column-reverse;
+	}
+
+	#stack div{
+		padding: 5px;
+		margin: 0px;
+		min-width: 300px;
+		max-width: 300px;
+		min-height: 30px;
+		max-height: 30px;
+		border: 0px solid black;
+		border-width: 1px 0px 0px 0px;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+
+	#stack div.memory{
+		background-color: seagreen;
+	}
+
+	#stack div.close {
+		padding: 0px;
+		min-height: 2px;
+		max-height: 2px;
+	}
+
+	#stackRight {
+		position: absolute;
+		top: 0px;
+		left: 300px;
+		background-color: cadetblue;
+	
+	}
+
+</style>
+</head>
+
+<body>
+<div style="position:relative">
+	<div id="stackWrapper"><div id="stack"></div></div>
+	<div id="stackRight">a<br>i<br>u</div>
+</div>
+
+</body>
+
+<script>
+
+// 宣言とか
+var stack = document.getElementById('stack');
+var stackWrapper = document.getElementById('stackWrapper');
+
+
+
+// 適当に追加してるだけ　テスト用
+for(let i=0; i<27; i++){
+	pushMemory("aiueo"+i);
+}
+
+
+
+//---- int getDisplayY(int id) ----
+// 見える通りの、stackWrapperの上端から、指定したIDの要素の下端との距離を返す
+function getDisplayY(id){
+	return stack.offsetHeight - getY(id) - stackWrapper.scrollTop;
+}
+
+//---- int getY(int id) ----
+// 0番目の要素の下端から、指定したIDの要素の下端との距離を返す
+function getY(id){
+	let sum = 0;
+	for(let i=0; i<id; i++){
+		sum += document.getElementById(i).offsetHeight;
+	}
+	return sum;
+}
+
+//---- void displayMemories(int[] arr) ----
+// 引数に渡した配列の番号(int)のIDのメモリだけ開く
+function displayMemories(arr){
+	[].slice.call(stack.children).forEach(function(memory){
+		if(~arr.indexOf(parseInt(memory.id))){
+			memory.classList.remove('close');
+		} else {
+			memory.classList.add('close');
+		}
+	})
+}
+
+//---- Node pushMemory(String str) ----
+// stackに積む　積んだやつを返す
+function pushMemory(str){
+	let element = createElement('div', {
+		appendTo: stack,
+		id: stack.children.length,
+		className: 'memory',
+		innerHTML: stack.children.length+':'+str
+	});
+	return element;
+}
+
+//---- Node createElement(String tagName, Object options) ----
+function createElement(tagName, options){
+	var options = options;
+	var tag = document.createElement(tagName);
+	Object.keys(options).forEach(function(key){
+		if(key=='appendTo'){
+			options[key].appendChild(tag);
+			return;
+		} else if(key=='style'){
+			Object.keys(options[key]).forEach(function(keyStyle){
+				tag.style[keyStyle] = options[key][keyStyle];
+			});
+			return;
+		}
+		tag[key] = options[key];
+	});
+	return tag;
+}
+
+
+</script>
+</html>
