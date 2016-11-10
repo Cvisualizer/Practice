@@ -84,7 +84,7 @@ function mapping() {
 	if(i > 0) {
     // 前とデータの属性が同じかチェック
 		if(data_att[i] == data_att[i-1]) {
-      // 上昇するかのチェック,
+      // 上昇するかのチェック
       if(data_att[i] == 1 && objectPos_x + global_variable_w > data_width){
         objectPos_x = 40;
   			objectPos_y -= 210;
