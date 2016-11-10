@@ -14,7 +14,11 @@ addChild(g,b);
 矢印描画
 引数はx1,y1,x2,y2,幅、色
 */
-drawArrow(490,110,350,110,5,"#f00");
+var arrow=getArrow(490,110,350,110,5,"#f00");
+//alert(arrow);
+//changeColor(arrow,"blue",1,1000);
+drawArrow(490,110,230,110,5,"#f00");
+drawArrow(490,110,300,110,5,"#f00");
 drawArrow(210,110,210,350,6,"#0f0");
 
 function moveObj(){
