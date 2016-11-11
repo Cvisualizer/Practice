@@ -130,8 +130,6 @@ function mapping() {
 call_count = 1
 var draw_func = setInterval(
 	function() {
-		console.log(data_att.length)
-		console.log(call_count);
 		mapping();
 		if(call_count == data_att.length) {
 			clearInterval(draw_func);
