@@ -127,11 +127,13 @@ function mapping() {
 	i ++;
 }
 // 遅延で描画
-call_count = 0
+call_count = 1
 var draw_func = setInterval(
 	function() {
+		console.log(data_att.length)
+		console.log(call_count);
 		mapping();
-		if(count > data_att.length) {
+		if(call_count == data_att.length) {
 			clearInterval(draw_func);
 		}
 		call_count ++;
