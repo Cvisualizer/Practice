@@ -37,7 +37,7 @@ function color(){
 }
 
 function transformArrow(){
-	arrow.transform(490,110,100,110,5,300);
+	arrow.transform(490,110,190,110,6,300);
 	arrow2.transform(210,110,210,600,6,300);
 }
 
