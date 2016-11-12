@@ -23,7 +23,7 @@ var data_list = [
 	function(){ global_variable('unko') },
 	function(){ global_variable('kome') },
 	function(){ global_variable('kome') },
-	function(){ main_func() },
+	function(){ main_func('main') },
 	function(){ main_local_variable('mini','red') },
 	function(){ main_local_variable('gori','red') },
 	function(){ main_local_variable('koro','red') },
@@ -50,6 +50,8 @@ var data_list = [
 var data_att = [
 	1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4
 ];
+var data_index = [];
+var pair = {};
 var local_variable_list = [];
 
 //外枠(いらないので後で消去)
@@ -59,14 +61,21 @@ function global_variable(name){
 	var rect = getRect(objectPos_x,objectPos_y,global_variable_w,global_variable_h,"blue",1,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5,20,"",name,"black");
 	addChild(label, rect);
+	pair = {};
+	pair["index"] = i;
+	pair["name"] = name;
+	data_index.push(pair);
 }
 
 
-function main_func() {
+function main_func(name) {
 	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,"black",1,"black",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"","main","black");
 	addChild(label, rect);
-
+	pair = {};
+	pair["index"] = i;
+	pair["name"] = name;
+	data_index.push(pair);
 }
 
 function main_local_variable(name,color){
@@ -74,6 +83,10 @@ function main_local_variable(name,color){
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
 	local_variable_list.push(rect);
+	pair = {};
+	pair["index"] = i;
+	pair["name"] = name;
+	data_index.push(pair);
 }
 
 
@@ -81,7 +94,10 @@ function call_func(name) {
 	var rect = getRect(objectPos_x,objectPos_y,func_w,func_h,"gray",1,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"",name,"black");
 	addChild(label, rect);
-
+	pair = {};
+	pair["index"] = i;
+	pair["name"] = name;
+	data_index.push(pair);
 }
 
 function local_variable(name,color){
@@ -89,6 +105,10 @@ function local_variable(name,color){
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
 	local_variable_list.push(rect);
+	pair = {};
+	pair["index"] = i;
+	pair["name"] = name;
+	data_index.push(pair);
 }
 
 var i = 0;
@@ -147,6 +167,7 @@ function mapping() {
 		}
 	}
 	i ++;
+	console.log(data_index);
 }
 
 function scale(){
