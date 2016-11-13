@@ -4,26 +4,32 @@
 	<meta charset="utf-8">
 	<!-- Load CSS -->
 	<link rel="stylesheet" type="text/css" href="./lib/stack.css">
+	<style>
+		body {
+			padding: 0px;
+			margin: 0px;
+			overflow: hidden;
+		}
+	</style>
 </head>
 <body>
 
 	<!-- Tool Buttons -->
-	<div>
+	<div style="background-color:#bbb;position:fixed;z-index:10000;">
 		<input type="button" value="scale" onClick="scale()">
 		<input type="button" value="color" onClick="color()">
 		<input type="button" value="move" onClick="moveObj()">
 		<input type="button" value="reset" onClick="reset()">
-		<input type="button" value="create" onClick="createParent()">
-		<input type="button" value="push" onClick="pushRect()">
-		<input type="button" value="up" onClick="scUp()">
-		<input type="button" value="down" onClick="scDown()">
 		<input type="button" value="transform" onClick="transformArrow()">
+		<input type="button" value="stack_push" onClick="stack_push()">
+		<input type="button" value="stack_addArrow" onClick="stack_addArrow()">
+		<input type="button" value="stack_rndDisplay" onClick="stack_rndDisplay()">
 	</div>
 
 	<!-- Main -->
-	<div style="position:relative">
-		<svg id="svg" width="800px" height="800px" style="z-index:20"></svg>
+	<div style="position:relative;width:100vw;height:100vh;background-color:#eee;">
 		<div id="stackWrapper" style="z-index:10"><div id="stack"></div></div>
+		<svg id="svg" width="100%" height="100%" style="z-index:20"></svg>
 	<div>
 
 </body>

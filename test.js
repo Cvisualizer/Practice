@@ -34,6 +34,21 @@ drawArrow(490,110,230,110,5,"#f00");
 drawArrow(490,110,300,110,5,"#f00");
 var arrow2=getArrow(210,110,210,350,6,"#0f0");
 
+
+
+//---- Stack Example
+
+	// 適当に追加してるだけ　テスト用
+	for(let i=0; i<17; i++){
+		pushMemory("pre"+i);
+	}
+
+
+
+
+
+//---------------------------------------//
+//---- ↓↓↓ Tool Button Functions ↓↓↓ ----//
 function moveObj(){
 	move(b,500,100,500);
 }
@@ -54,6 +69,26 @@ function color(){
 function transformArrow(){
 	arrow.transform(490,110,190,110,6,300);
 	arrow2.transform(210,110,210,600,6,300);
+}
+
+function stack_push(){
+	pushMemory("push"+stack.children.length);
+}
+
+function stack_addArrow(){
+	let start = prompt("始点:ID");
+	let end = prompt("終点:ID");
+	let x = window.screen.width - stackWrapper.offsetWidth - 10;
+	drawArrow(x, getDisplayY(start)-20, x, getDisplayY(end)-10, 3, "#aaa");
+	alert("始点:"+start+", 終点:"+end);
+}
+
+function stack_rndDisplay(){
+	let arr = [];
+	for(let i=0; i<stack.children.length; i++){
+		if(Math.random()<0.6) arr.push(i);
+	}
+	displayMemories(arr);
 }
 
 function reset(){

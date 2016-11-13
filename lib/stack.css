@@ -1,15 +1,15 @@
 #stackWrapper {
 	position:absolute;
 	top: 0px;
-	left: 600px;
-	width: 500px;
-	height: 300px;
+	right: 0px;
+	width: 350px;
+	height: 100vh;
 	overflow-y: auto;
 }
 
 #stack {
 	width: 300px;
-	min-height: 300px;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column-reverse;
 }
