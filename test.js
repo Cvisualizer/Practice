@@ -80,7 +80,6 @@ function stack_addArrow(){
 	let end = prompt("終点:ID");
 	let x = window.screen.width - stackWrapper.offsetWidth - 10;
 	drawArrow(x, getDisplayY(start)-20, x, getDisplayY(end)-10, 3, "#aaa");
-	alert("始点:"+start+", 終点:"+end);
 }
 
 function stack_rndDisplay(){
