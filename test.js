@@ -1,11 +1,12 @@
 var b=getRect(200,100,300,300,"#00f",1,"white",5);
 var g=getRect(200,100,200,200,"#0f0",1,"white",5);
 var r=getRect(400,100,100,100,"#f00",1,"white",5);
-var v=getRect(400,450,100,100,"#000",1,"white",5);
+var v=getRect(400,450,100,100,"#0ff",1,"white",5);
 var labelB=getLabel(220,380,20,"","blue","#fff");
 var labelR=getLabel(420,120,20,"","red","#fff");
 var labelG=getLabel(220,120,20,"","green","#fff");
-var labelV=getLabel(385,570,16,"","Click to change color","#000");
+var labelV=getLabel(425,505,16,"","#00ffff","#000");
+var labelVT=getLabel(340,570,16,"","クリックするとランダム色変化","#000");
 addChild(labelR,r);
 addChild(labelG,g);
 addChild(labelB,b);
@@ -13,9 +14,16 @@ addChild(r,g);
 addChild(g,b);
 
 v.click(function(e,x,y){
-	var newColor=selectColor();
-	changeColor(v,newColor,1,0);
+	changeSampleColor();
 });
+
+function changeSampleColor(){
+	var newColor=selectColor();
+	//changeColor(v,newColor,1,100);
+	changeColor(v,newColor[0],1,100);
+	labelV.attr("text",newColor[0]);
+	changeColor(labelV,newColor[1],1,0);
+}
 
 /*
 矢印描画
