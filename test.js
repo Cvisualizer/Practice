@@ -23,6 +23,13 @@ var data_list = [
 	function(){ global_variable('unko') },
 	function(){ global_variable('kome') },
 	function(){ global_variable('kome') },
+	function(){ global_variable('unko') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('unko') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('unko') },
 	function(){ main_func('main') },
 	function(){ main_local_variable('mini','red') },
 	function(){ main_local_variable('gori','red') },
@@ -43,16 +50,14 @@ var data_list = [
 	function(){ call_func('gori') }
 ];
 
-
-
 // データの属性
 // 1 -> global_variable, 2 -> main, 3 -> main_local_variable, 4 -> call_func, 5 -> local_variable
 var data_att = [
-	1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4
+	1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4
 ];
 var data_index = [];
 var pair = {};
-var local_variable_list = [];
+var variable_list = [];
 
 //外枠(いらないので後で消去)
 var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
@@ -61,6 +66,7 @@ function global_variable(name){
 	var rect = getRect(objectPos_x,objectPos_y,global_variable_w,global_variable_h,"blue",1,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5,20,"",name,"black");
 	addChild(label, rect);
+	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
@@ -82,7 +88,7 @@ function main_local_variable(name,color){
 	var rect = getRect(local_x,local_y,main_local_w,main_local_h,color,1,"",5);
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
-	local_variable_list.push(rect);
+	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
@@ -104,13 +110,14 @@ function local_variable(name,color){
 	var rect = getRect(local_x,local_y,local_w,local_h,color,1,"",5);
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
-	local_variable_list.push(rect);
+	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
 	data_index.push(pair);
 }
 
+// 改良版(仮)
 var i = 0;
 function mapping() {
 	if(i == 0) {
@@ -119,35 +126,46 @@ function mapping() {
 	if(i > 0) {
     // 前とデータの属性が同じかチェック
 		if(data_att[i] == data_att[i-1]) {
-      // 上昇するかのチェック,
-      if(data_att[i] == 1 && objectPos_x + global_variable_w > data_width){
-        objectPos_x = 40;
-  			objectPos_y -= 210;
-  			data_list.shift()();
-      // 関数時の横移動
-      } else if(data_att[i] == 2 || data_att[i] == 4) {
-				objectPos_x += 200;
+      // 上昇するかのチェック 枠をはみでているのかの
+      if(data_att[i] == 1){
+				if(variable_list.length > 4) {
+					//はみ出たらxを固定
+					objectPos_x = 640;
+					get_width = 40;
+					get_height = objectPos_y;
+	  			data_list.shift()();
+					scale_variable(0,variable_list,get_width,get_height);
+				// グローバル変数の横移動
+				} else {
+					objectPos_x += 120;
+					data_list.shift()();
+				}
+			} else if(data_att[i] == 3) {
+				if(variable_list.length > 6) {
+					local_x = 620;
+					data_list.shift()();
+					get_width = objectPos_x;
+					get_height = objectPos_y;
+					scale_variable(1,variable_list,get_width,get_height);
+				} else {
+					local_x += 80;
+					data_list.shift()();
+				}
+			// 前が空の関数の時だけ呼ばれる
+			} else if(data_att[i] == 4) {
+				objectPos_x += 300;
 				data_list.shift()();
-			// グローバル変数時の横移動
-      } else if(data_att[i] == 1) {
-				objectPos_x += 120;
-				data_list.shift()();
-      // ローカル変数の時、縮小できるように変更
-			} else if(data_att[i] == 3 || data_att[i] == 5) {
-        if(data_att[i] == data_att[i - 1]) {
-        		local_x += 80;
-        		data_list.shift()();
-						// 縮小部分
-						if(data_att[i] == 3 && local_variable_list.length > 7) {
-							get_width = objectPos_x;
-							get_height = objectPos_y;
-							scale_variable(1,local_variable_list,get_width,get_height);
-						} else if(data_att[i] == 5 && local_variable_list.length > 3) {
-							get_width = objectPos_x;
-							get_height = objectPos_y;
-							scale_variable(2,local_variable_list,get_width,get_height);
-						}
-        }
+			} else if(data_att[i] == 5) {
+				if(variable_list.length > 2) {
+					local_x = 300;
+					data_list.shift()();
+					get_width = objectPos_x;
+					get_height = objectPos_y;
+					scale_variable(2,variable_list,get_width,get_height);
+				} else {
+					local_x += 80;
+					data_list.shift()();
+				}
       }
     // ローカル変数の最初の描画
     } else if(data_att[i] == 3 || data_att[i] == 5) {
@@ -163,11 +181,11 @@ function mapping() {
 			objectPos_x = 40;
 			objectPos_y -= 210;
 			data_list.shift()();
-			local_variable_list = [];
+			variable_list = [];
 		}
 	}
 	i ++;
-	console.log(data_index);
+	//console.log(data_list[i]);
 }
 
 function scale(){
@@ -177,10 +195,10 @@ function scale(){
 //ローカル変数の縮小
 function scale_variable(type,data,width,height){
 	var object_width;
-	if(type == 1) {
-		object_width = main_func_w / data.length * 0.6;
+	if(type == 0 || type == 1) {
+		object_width = main_func_w / data.length * 0.9;
 	} else if(type == 2) {
-		object_width = func_w / data.length * 0.6;
+		object_width = func_w / data.length * 0.9;
 	}
 	for(count=0; count < data.length; count++){
 		changeSize(data[count],object_width,object_width/2,1000);
@@ -188,7 +206,6 @@ function scale_variable(type,data,width,height){
 		width += object_width + 2;
 	}
 }
-
 
 // 遅延で描画
 call_count = 1
