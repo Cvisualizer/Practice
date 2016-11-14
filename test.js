@@ -39,10 +39,30 @@ var arrow2=getArrow(210,110,210,350,6,"#0f0");
 //---- Stack Example
 
 	// 適当に追加してるだけ　テスト用
-	for(let i=0; i<17; i++){
+	for(var i=0; i<17; i++){
 		pushMemory("pre"+i);
 	}
 
+	// スタック矢印
+	var stackArrows = [];
+
+	// スクロールで矢印も動かすように
+	stackWrapper.addEventListener("scroll" , function (e){
+		console.log(e);
+		var _arrows = []
+		stackArrows.forEach(function(arw){
+			var d = arw.node.getAttribute('d');
+			var start = (d.match(/^M(.*?)C/i)[1]).split(",");
+			var end = d.split(",").slice(this.length-2);
+			_arrows.push(
+				getArrow(parseInt(start[0]), parseInt(start[1])+e.deltaY, parseInt(end[0]), parseInt(end[1])+e.deltaY, 3, "#aaa")
+			);
+			arw.remove();
+		});
+		_arrows.forEach(function(arw){
+			stackArrows.push(arw);
+		});
+	});
 
 
 
@@ -76,15 +96,20 @@ function stack_push(){
 }
 
 function stack_addArrow(){
-	let start = prompt("始点:ID");
-	let end = prompt("終点:ID");
-	let x = window.screen.width - stackWrapper.offsetWidth - 10;
-	drawArrow(x, getDisplayY(start)-20, x, getDisplayY(end)-10, 3, "#aaa");
+	var start = prompt("始点:ID");
+	var end = prompt("終点:ID");
+	var x = window.screen.width - stackWrapper.offsetWidth - 10;
+	stackArrows.push(getArrow(x, getDisplayY(start)-20, x, getDisplayY(end)-10, 3, "#aaa"));
 }
 
 function stack_rndDisplay(){
-	let arr = [];
-	for(let i=0; i<stack.children.length; i++){
+	// 矢印削除
+	stackArrows.forEach(function(arw){
+		arw.remove();
+	})
+	// 表示変更
+	var arr = [];
+	for(var i=0; i<stack.children.length; i++){
 		if(Math.random()<0.6) arr.push(i);
 	}
 	displayMemories(arr);
