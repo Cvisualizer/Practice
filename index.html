@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"　name="robots" content="noindex,nofollow,noarchive" />
+		<title>C-Visualizer</title>
+		<pre id="editor">
+	</pre>
+	</head>
+	<body bgcolor="#fff">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="lib/jquery.js"></script> 
+		<script src="lib/snap.svg-min.js"></script>
+		<script src="lib/socket.io.js"></script>
+		<script src="lib/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/ace_settings.js"></script>
+		<script src="main.js"></script>
+		<script src="lib/material.js"></script>
+		<script src="UISettings.js"></script>
+		<div id="def">
+			<div id="title">
+				C-Visualizer
+			</div>
+			<div id="tutorial">
+				C-Visualizerはプログラム可視化サービスです
+				<br>
+				コードを入力して開始ボタンを押してください
+				<br>
+				データ構造とポインタの可視化を行います
+			</div>
+		</div>
+		<div id="left"></div>
+		<div id="exec" class="execButton"></div>
+		<div id="save" class="saveButton"></div>
+		<div id="load" class="loadButton"></div>
+		<div id="execText">実行</div>
+		<div id="saveText">保存</div>
+		<div id="loadText">読込</div>
+	</body>
+</html>

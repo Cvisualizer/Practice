@@ -1,0 +1,90 @@
+<html>
+  <head>
+  	<title>ファイル読み込み</title>
+    <meta charset="utf-8">
+  </head>
+  <body bgcolor="#fff">
+  	<style type="text/css">
+	<!--
+	input.button {
+		background: #007199;
+		border: 1px solid #DDD;
+		border-radius: 8px 8px 8px 8px;
+		-moz-border-radius: 8px 8px 8px 8px;
+		-webkit-border-radius: 8px 8px 8px 8px;
+		font-size:15px;
+		color: #fff;
+		width: 200px;
+		padding: 10px 0;
+	}
+	input.button:active{
+		background: #00506d;
+		color: #ccc;
+	}
+	#head{
+	  background-color:#080808;
+	  position:relative;
+	  top:-2vh;
+	  left:-2vw;
+	  width:105vw;
+	  height:14vh;
+	  z-index: 0;
+	  opacity:0.9;
+	}
+
+	#title{
+		position:relative;
+		color:white;
+		top:-13vh;
+		left:15vw;
+		z-index:6;
+	  	font: 4vw "HelveticaNeue-UltraLight", sans-serif;
+		pointer-events:none;
+	}
+
+	//-->
+	</style>
+	<div id="head"></div>
+    <script type="text/javascript">
+    <!--
+
+	// ------------------------------------------------------------
+	// 生成主から渡された引数を受け取る
+	// ------------------------------------------------------------
+	var argument_obj = window.dialogArguments;
+	if(argument_obj !== undefined){
+
+		// ------------------------------------------------------------
+		// コールバック関数を実行して、データを受け取る
+		// ------------------------------------------------------------
+		var request_obj = argument_obj.getData();
+		// 出力テスト
+		var code="<div id='title'>読み込むファイルを選択してください</div>\n";
+		for(var i=0;i<request_obj.fName.length;i++){
+			code+="<div><CENTER><input type='button' value='"+request_obj.fName[i]+"' onClick='emmit(this.value,"+i+")');' class='button'></CENTER></div><br>\n";
+		}
+		document.write(code);
+
+		// ------------------------------------------------------------
+		// クリックした時に実行されるイベント
+		// ------------------------------------------------------------
+		function emmit(value,num){
+
+			// ------------------------------------------------------------
+			// 返信用オブジェクト
+			// ------------------------------------------------------------
+			var receive_obj = [value,num];
+
+			// ------------------------------------------------------------
+			// コールバック関数を実行して、データを渡す
+			// ------------------------------------------------------------
+			argument_obj.setData(receive_obj);
+			window.close();
+		};
+	}
+
+    //-->
+    </script>
+
+  </body>
+</html>

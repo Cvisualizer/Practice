@@ -32,6 +32,7 @@ function checkColor(){
 			}
 		}
 	}
+	//showColorSet();
 }
 
 /*

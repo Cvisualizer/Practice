@@ -1,0 +1,122 @@
+#def{
+  position:relative;
+}
+
+#result{
+	background-color:#fff;
+	position:relative;
+	top:0px;
+	left:30%;
+	width:50%;
+	height:500px;
+	z-index: 1;
+	opacity:0.9;
+  border-radius: 5px;
+}
+
+#left{
+  background-color:#080808;
+  position:fixed;
+  top:0vh;
+  left:-10px;
+  width:25%;
+  height:150vh;
+  z-index: 0;
+  opacity:0.9;
+}
+
+#title{
+position:fixed;
+	color:white;
+	top:3vh;
+	left:3.8%;
+	z-index:6;
+  font: 3.5vw "HelveticaNeue-Thin", sans-serif;
+	pointer-events:none;
+}
+
+#tutorial{
+  position:fixed;
+  color:white;
+  top:15vh;
+  left:2%;
+  z-index:4;
+  font: 1vw "HelveticaNeue", sans-serif;
+  pointer-events:none;
+}
+
+#exec{
+  background-color:#ea5532;
+  position:fixed;
+  top:88vh;
+  left:1.5vw;
+  width:5vw;
+  height:5%;
+  z-index: 3;
+  opacity:1;
+}
+
+#save{
+  background-color:#288c66;
+  position:fixed;
+  top:88vh;
+  left:9.5vw;
+  width:5vw;
+  height:5%;
+  z-index: 3;
+  opacity:1;
+}
+
+#load{
+  background-color:#007199;
+  position:fixed;
+  top:88vh;
+  left:17.5vw;
+  width:5vw;
+  height:5%;
+  z-index: 3;
+  opacity:1;
+}
+
+#execText{
+  position:fixed;
+  color:white;
+  top:88.5vh;
+  left:2.5vw;
+  z-index:5;
+  font: 1.5vw "HelveticaNeue", sans-serif;
+  pointer-events:none;
+  pointer-events:none;
+}
+
+#saveText{
+  position:fixed;
+  color:white;
+  top:88.5vh;
+  left:10.5vw;
+  z-index:5;
+  font: 1.5vw "HelveticaNeue", sans-serif;
+  pointer-events:none;
+  pointer-events:none;
+}
+
+#loadText{
+  position:fixed;
+  color:white;
+  top:88.5vh;
+  left:18.5vw;
+  z-index:5;
+  font: 1.5vw "HelveticaNeue", sans-serif;
+  pointer-events:none;
+  pointer-events:none;
+}
+
+#editor {
+  position: fixed;
+  border: 1px solid lightgray;
+  top:26vh;
+  left:2.1vw;
+  height: 55vh;
+  width: 20%;
+  z-index: 5;
+}
