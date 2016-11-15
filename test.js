@@ -61,7 +61,8 @@ var data_list = [
 	function(){ global_variable('unko') },
 	function(){ global_variable('kome') },
 	function(){ global_variable('kome') },
-	function(){ global_variable('unko') }
+	function(){ global_variable('unko') },
+	function(){ call_func('doro') }
 ];
 
 
@@ -69,7 +70,7 @@ var data_list = [
 // データの属性
 // 1 -> global_variable, 2 -> main, 3 -> main_local_variable, 4 -> call_func, 5 -> local_variable
 var data_att = [
-	1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4,5,5,5,4,5,5,4,1,1,1,1,1,1
+	1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4,5,5,5,4,5,5,4,1,1,1,1,1,1,4
 ];
 var data_index = [];
 var pair = {};
@@ -159,7 +160,6 @@ function local_variable(name,color){
 	data_index.push(pair);
 }
 
-// 改良版(仮)
 var i = 0;
 var scroll_counter = 1;
 function mapping() {
@@ -206,7 +206,6 @@ function mapping() {
 						data_list.shift()();
 					}
 				} else {
-					console.log("get")
 					objectPos_x += 300;
 					if(objectPos_x + func_w > data_width) {
 						scrollRectsTo(scroll_counter);
@@ -267,7 +266,8 @@ function mapping() {
 	}
 	i ++;
 	// ホイールスクロール
-	if(data_list.length == 0) {
+	console.log(data_list.length);
+	if(data_list.length == 0 || data_list.length == 1) {
 		startScroll();
 	}
 }
@@ -293,13 +293,18 @@ function lazy_draw(){
 	objectPos_y = 30;
 	setTimeout( function() {
 		data_list.shift()();
-	}, 300);
+	}, 400);
 }
 
 // スクロール
 function scrollRectsTo(count){
-	var shiftHeight = 80;
-	move(base, parseInt(base.node.getAttribute("x")), data_height + (main_func_h + shiftHeight)*count,100);
+	if(data_att[i] == 1 || data_att[i-1] == 1 && data_att[i] == 4) {
+		var shiftHeight = 60;
+		move(base, parseInt(base.node.getAttribute("x")), data_height + (main_func_h + shiftHeight)*count,200);
+	} else {
+		var shiftHeight = 80;
+		move(base, parseInt(base.node.getAttribute("x")), data_height + (main_func_h + shiftHeight)*count,200);
+	}
 	scroll_counter++;
 }
 
