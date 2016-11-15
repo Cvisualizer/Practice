@@ -266,9 +266,10 @@ function mapping() {
 		}
 	}
 	i ++;
-	console.log(function_list);
-	console.log(objectPos_x);
-	console.log(objectPos_y);
+	// ホイールスクロール
+	if(data_list.length == 0) {
+		startScroll();
+	}
 }
 
 //ローカル変数の縮小
@@ -300,6 +301,23 @@ function scrollRectsTo(count){
 	var shiftHeight = 80;
 	move(base, parseInt(base.node.getAttribute("x")), data_height + (main_func_h + shiftHeight)*count,100);
 	scroll_counter++;
+}
+
+function startScroll() {
+	group.node.addEventListener("wheel", function(e){
+		// 上にスクロール
+		if(e.deltaY<0 && parseInt(base.node.getAttribute("y"))<=data_height){
+			move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+data_height, 10);
+		}
+		// 下にスクロール
+		if(e.deltaY>0){
+			if(data_height<=parseInt(base.node.getAttribute("y"))-data_height*1){
+				move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-data_height, 10);
+			}else{
+				move(base, parseInt(base.node.getAttribute("x")), data_height, 1); // 位置を修正
+			}
+		}
+	});
 }
 
 // 遅延で描画
