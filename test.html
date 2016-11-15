@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<input type="button" value="scale" onClick="scale()">
-		<input type="button" value="color" onClick="color()">
-		<input type="button" value="move" onClick="moveObj()">
-		<input type="button" value="reset" onClick="reset()">
+		<input type="text" id="scroll_counter" value="0">
+		<input type="button" value="scroll" onClick="scrollRectsTo(parseInt(document.getElementById('scroll_counter').value))">
+		<input type="text" id="target_num" value="0">
+		<input type="button" value="search" onClick="searchTarget(parseInt(document.getElementById('target_num').value))">
 		<script src="lib/snap.svg-min.js"></script>
 		<script src="lib/define.js"></script>
 		<script src="lib/tools.js"></script>

@@ -96,6 +96,7 @@ function global_variable(name){
 	pair["index"] = i;
 	pair["name"] = name;
 	pair["rect"] = rect;
+	pair["scroll_num"] = scroll_counter;
 	data_index.push(pair);
 }
 
@@ -111,6 +112,7 @@ function main_func(name) {
 	pair["index"] = i;
 	pair["name"] = name;
 	pair["rect"] = rect;
+	pair["scroll_num"] = scroll_counter;
 	data_index.push(pair);
 }
 
@@ -126,6 +128,7 @@ function main_local_variable(name,color){
 	pair["index"] = i;
 	pair["name"] = name;
 	pair["rect"] = rect;
+	pair["scroll_num"] = scroll_counter;
 	data_index.push(pair);
 }
 
@@ -142,6 +145,7 @@ function call_func(name) {
 	pair["index"] = i;
 	pair["name"] = name;
 	pair["rect"] = rect;
+	pair["scroll_num"] = scroll_counter;
 	data_index.push(pair);
 }
 
@@ -157,6 +161,7 @@ function local_variable(name,color){
 	pair["index"] = i;
 	pair["name"] = name;
 	pair["rect"] = rect;
+	pair["scroll_num"] = scroll_counter;
 	data_index.push(pair);
 }
 
@@ -266,7 +271,6 @@ function mapping() {
 	}
 	i ++;
 	// ホイールスクロール
-	console.log(data_list.length);
 	if(data_list.length == 0 || data_list.length == 1) {
 		startScroll();
 	}
@@ -296,7 +300,6 @@ function lazy_draw(){
 	}, 400);
 }
 
-// スクロール
 function scrollRectsTo(count){
 	if(data_att[i] == 1 || data_att[i-1] == 1 && data_att[i] == 4) {
 		var shiftHeight = 60;
@@ -312,17 +315,25 @@ function startScroll() {
 	group.node.addEventListener("wheel", function(e){
 		// 上にスクロール
 		if(e.deltaY<0 && parseInt(base.node.getAttribute("y"))<=data_height){
-			move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+data_height, 10);
+			move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))+data_height + 60, 10);
 		}
 		// 下にスクロール
 		if(e.deltaY>0){
 			if(data_height<=parseInt(base.node.getAttribute("y"))-data_height*1){
-				move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))-data_height, 10);
+				move(base, parseInt(base.node.getAttribute("x")), parseInt(base.node.getAttribute("y"))- data_height, 10);
 			}else{
 				move(base, parseInt(base.node.getAttribute("x")), data_height, 1); // 位置を修正
 			}
 		}
 	});
+}
+// 検索
+function searchTarget(target_num){
+	var target = data_index[target_num]["rect"];
+	changeColor(target,"gold",0.2,1000);
+	if(parseInt(target.node.getAttribute("y")) > data_height) {
+		move(base, 10, parseInt(target.node.getAttribute("y"))-(func_h*(scroll_counter-data_index[target_num]["scroll_num"])),200);
+	}
 }
 
 // 遅延で描画
