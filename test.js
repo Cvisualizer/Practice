@@ -39,9 +39,13 @@ var arrow2=getArrow(210,110,210,350,6,"#0f0");
 //---- Stack Example
 
 	// 適当に追加してるだけ　テスト用
+	// スタック
 	for(var i=0; i<17; i++){
 		pushMemory("pre"+i);
 	}
+	// グローバル
+	pushGlobalMemory("global1");
+	pushGlobalMemory("global2");
 
 	// スタック矢印
 	var stackArrows = [];

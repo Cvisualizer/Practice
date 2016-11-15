@@ -14,7 +14,7 @@
 	flex-direction: column-reverse;
 }
 
-#stack div{
+#stack div {
 	padding: 5px;
 	margin: 0px;
 	min-width: 300px;
@@ -27,11 +27,43 @@
 	overflow: hidden;
 }
 
-#stack div.memory{
+#stack div.memory {
 	background-color: seagreen;
 }
 
 #stack div.close {
+	padding: 0px;
+	min-height: 2px;
+	max-height: 2px;
+}
+
+#globalMemory {
+	position:absolute;
+	top: 0px;
+	right: 50px;
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+}
+
+#globalMemory div {
+	padding: 5px;
+	margin: 0px;
+	min-width: 300px;
+	max-width: 300px;
+	min-height: 30px;
+	max-height: 30px;
+	border: 0px solid black;
+	border-width: 1px 0px 0px 0px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+#globalMemory div.memory {
+	background-color: steelblue;
+}
+
+#globalMemory div.close {
 	padding: 0px;
 	min-height: 2px;
 	max-height: 2px;
