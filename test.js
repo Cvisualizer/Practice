@@ -21,6 +21,7 @@ var get_height;
 // testdata
 var data_list = [
 	function(){ global_variable('unko') },
+	function(){ global_variable('unko') },
 	function(){ global_variable('kome') },
 	function(){ global_variable('kome') },
 	function(){ global_variable('unko') },
@@ -47,29 +48,53 @@ var data_list = [
 	function(){ local_variable("local","yellow") },
 	function(){ local_variable("local","yellow") },
 	function(){ local_variable("local","yellow") },
-	function(){ call_func('gori') }
+	function(){ call_func('gori') },
+	function(){ local_variable("me","yellow") },
+	function(){ local_variable("me","yellow") },
+	function(){ local_variable("you","yellow") },
+	function(){ call_func('doro') },
+	function(){ local_variable("you","yellow") },
+	function(){ local_variable("you","yellow") },
+	function(){ call_func('guro') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('unko') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('kome') },
+	function(){ global_variable('unko') }
 ];
+
+
 
 // データの属性
 // 1 -> global_variable, 2 -> main, 3 -> main_local_variable, 4 -> call_func, 5 -> local_variable
 var data_att = [
-	1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4
+	1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4,5,5,5,4,5,5,4,1,1,1,1,1,1
 ];
 var data_index = [];
 var pair = {};
 var variable_list = [];
+var function_list = [];
 
-//外枠(いらないので後で消去)
+// 外枠(いらないので後で消去)
 var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
+var base = getRect(10, data_height, data_width, 10, "black",1);
+var group = svg.g().attr({mask: getRect(10,10,data_width,data_height,"#fff")})
+var labelGroup = svg.g().attr({mask: getRect(10, 10, data_width, data_height, "#fff")});
+
 
 function global_variable(name){
 	var rect = getRect(objectPos_x,objectPos_y,global_variable_w,global_variable_h,"blue",1,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5,20,"",name,"black");
 	addChild(label, rect);
+	addChild(rect, base);
+	group.append(rect);
+	labelGroup.append(label);
 	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
+	pair["rect"] = rect;
 	data_index.push(pair);
 }
 
@@ -78,9 +103,13 @@ function main_func(name) {
 	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,"black",1,"black",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"","main","black");
 	addChild(label, rect);
+	addChild(rect, base);
+	group.append(rect);
+	labelGroup.append(label);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
+	pair["rect"] = rect;
 	data_index.push(pair);
 }
 
@@ -88,10 +117,14 @@ function main_local_variable(name,color){
 	var rect = getRect(local_x,local_y,main_local_w,main_local_h,color,1,"",5);
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
+	addChild(rect, base);
+	group.append(rect);
+	labelGroup.append(label);
 	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
+	pair["rect"] = rect;
 	data_index.push(pair);
 }
 
@@ -100,9 +133,14 @@ function call_func(name) {
 	var rect = getRect(objectPos_x,objectPos_y,func_w,func_h,"gray",1,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"",name,"black");
 	addChild(label, rect);
+	addChild(rect, base);
+	group.append(rect);
+	labelGroup.append(label);
+	function_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
+	pair["rect"] = rect;
 	data_index.push(pair);
 }
 
@@ -110,21 +148,25 @@ function local_variable(name,color){
 	var rect = getRect(local_x,local_y,local_w,local_h,color,1,"",5);
 	var label =getLabel(local_x,local_y - 5,20,"",name,"white");
 	addChild(label, rect);
+	addChild(rect, base);
+	group.append(rect);
+	labelGroup.append(label);
 	variable_list.push(rect);
 	pair = {};
 	pair["index"] = i;
 	pair["name"] = name;
+	pair["rect"] = rect;
 	data_index.push(pair);
 }
 
 // 改良版(仮)
 var i = 0;
+var scroll_counter = 1;
 function mapping() {
 	if(i == 0) {
 		data_list.shift()();
 	}
 	if(i > 0) {
-    // 前とデータの属性が同じかチェック
 		if(data_att[i] == data_att[i-1]) {
       // 上昇するかのチェック 枠をはみでているのかの
       if(data_att[i] == 1){
@@ -153,8 +195,26 @@ function mapping() {
 				}
 			// 前が空の関数の時だけ呼ばれる
 			} else if(data_att[i] == 4) {
-				objectPos_x += 300;
-				data_list.shift()();
+				if(function_list.length > 1) {
+					objectPos_x = 40;
+					objectPos_y -= 210;
+					// スクロール
+					if(objectPos_y < 40) {
+						scrollRectsTo(scroll_counter);
+						lazy_draw();
+					} else {
+						data_list.shift()();
+					}
+				} else {
+					console.log("get")
+					objectPos_x += 300;
+					if(objectPos_x + func_w > data_width) {
+						scrollRectsTo(scroll_counter);
+						lazy_draw();
+					} else {
+						data_list.shift()();
+					}
+				}
 			} else if(data_att[i] == 5) {
 				if(variable_list.length > 2) {
 					local_x = 300;
@@ -174,22 +234,41 @@ function mapping() {
       data_list.shift()();
 		// 前がローカル変数で次がcallFuncだったら
 		} else if(data_att[i] == 4 && data_att[i-1] == 5) {
+			variable_list = [];
+			function_list = [];
 			objectPos_x += 300;
-			data_list.shift()();
+			// ここにはみ出た時の処理の追加
+			if(objectPos_x + 20 > data_width) {
+				objectPos_x = 40;
+				objectPos_y -= 210;
+				// スクロール
+				if(objectPos_y < 0) {
+					scrollRectsTo(scroll_counter);
+					lazy_draw();
+				} else {
+					data_list.shift()();
+				}
+			} else {
+				data_list.shift()();
+			}
 		//上昇
 		} else if(data_att[i] != data_att[i-1]){
 			objectPos_x = 40;
 			objectPos_y -= 210;
-			data_list.shift()();
 			variable_list = [];
+			// スクロール
+			if(objectPos_y < 0) {
+				scrollRectsTo(scroll_counter);
+				lazy_draw();
+			} else {
+				data_list.shift()();
+			}
 		}
 	}
 	i ++;
-	//console.log(data_list[i]);
-}
-
-function scale(){
-	changeSize(b,300,10,500);
+	console.log(function_list);
+	console.log(objectPos_x);
+	console.log(objectPos_y);
 }
 
 //ローカル変数の縮小
@@ -207,6 +286,22 @@ function scale_variable(type,data,width,height){
 	}
 }
 
+// 遅延実行
+function lazy_draw(){
+	objectPos_x = 40;
+	objectPos_y = 30;
+	setTimeout( function() {
+		data_list.shift()();
+	}, 300);
+}
+
+// スクロール
+function scrollRectsTo(count){
+	var shiftHeight = 80;
+	move(base, parseInt(base.node.getAttribute("x")), data_height + (main_func_h + shiftHeight)*count,100);
+	scroll_counter++;
+}
+
 // 遅延で描画
 call_count = 1
 var draw_func = setInterval(
@@ -217,5 +312,5 @@ var draw_func = setInterval(
 		}
 		call_count ++;
 	}
-	, 1200
+	, 800
 )
