@@ -88,7 +88,7 @@ var variable_list = [];
 var function_list = [];
 
 // 外枠(いらないので後で消去)
-var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
+//var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
 var base = getRect(10, data_height, data_width, 10, "black",1);
 var group = svg.g().attr({mask: getRect(10,10,data_width,data_height,"#fff")})
 var labelGroup = svg.g().attr({mask: getRect(10, 10, data_width, data_height, "#fff")});
@@ -112,7 +112,7 @@ function global_variable(name,color){
 
 
 function main_func(name) {
-	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,"black",1,"black",5);
+	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,"black",0.9,"black",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"","main","black");
 	addChild(label, rect);
 	addChild(rect, base);
@@ -144,7 +144,7 @@ function main_local_variable(name,color){
 
 
 function call_func(name) {
-	var rect = getRect(objectPos_x,objectPos_y,func_w,func_h,"gray",1,"",5);
+	var rect = getRect(objectPos_x,objectPos_y,func_w,func_h,"#736d71",0.9,"",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"",name,"black");
 	addChild(label, rect);
 	addChild(rect, base);

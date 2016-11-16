@@ -6,8 +6,8 @@
 
 var colorSet;
 var colorCount=0;
-const MAX_COLOR_VALUE=600;
-const MIN_COLOR_VALUE=300;
+const MAX_COLOR_VALUE=500;
+const MIN_COLOR_VALUE=200;
 
 socket=io.connect("http://133.27.5.14:5324/",function(){
 	//socket.emit('message');
@@ -41,8 +41,9 @@ function checkColor(){
 2番目にはその色と併用するテキストの色が格納される(濃い色なら白、薄い色なら黒)
 */
 function selectColor(){
-	var rn=Math.floor(Math.random()*(colorSet[colorCount%4].length+1));
+	var rn=Math.floor(Math.random()*(colorSet[colorCount%4].length));
 	var rcv=colorSet[colorCount%4][rn];
+	if(rcv==undefined) alert(colorCount%4+" "+rn);
 	var r,g,b,tc=0;
 	r=parseInt(rcv.slice(1,3),16);
 	g=parseInt(rcv.slice(3,5),16);
