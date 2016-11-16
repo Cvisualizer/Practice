@@ -1,7 +1,7 @@
 //---- 動作確認用
 
 // スタック
-for(var i=0; i<15; i++){
+for(var i=0; i<7; i++){
 	pushMemory("pre"+i, "#fff", "#bbb");
 }
 // グローバル

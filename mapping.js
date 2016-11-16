@@ -1,7 +1,7 @@
 // 幅や高さはとりあえず決め打ちなので修正
 const data_width = 450;
 const data_height = 700;
-var objectPos_x = 350;
+var objectPos_x = 0;
 var objectPos_y = 600;
 var global_variable_w = 60;
 var global_variable_h = 40;
