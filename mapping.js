@@ -1,4 +1,3 @@
-// 幅や高さはとりあえず決め打ちなので修正
 const data_width = 450;
 const data_height = 700;
 var objectPos_x = 0;
@@ -82,10 +81,10 @@ var variable_list = [];
 var function_list = [];
 
 // 外枠(いらないので後で消去)
-var frame = getRect(340,10,data_width,data_height,"white",1,"black",5);
-var base = getRect(340, data_height, data_width, 10, "black",1);
-var group = svg.g().attr({mask: getRect(340,10,data_width,data_height,"#fff")})
-var labelGroup = svg.g().attr({mask: getRect(340, 10, data_width, data_height, "#fff")});
+var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
+var base = getRect(10, data_height, data_width, 10, "black",1);
+var group = svg.g().attr({mask: getRect(10,10,data_width,data_height,"#fff")})
+var labelGroup = svg.g().attr({mask: getRect(10, 10, data_width, data_height, "#fff")});
 
 
 function global_variable(name,color){
@@ -215,7 +214,7 @@ function mapping() {
 						data_list.shift()();
 					}
 				} else {
-					objectPos_x += 340;
+					objectPos_x += 10;
 					if(objectPos_x + func_w > data_width) {
 						scrollRectsTo(scroll_counter);
 						lazy_draw();
@@ -282,6 +281,7 @@ function mapping() {
 	if(data_list.length == 0 || data_list.length == 1) {
 		startScroll();
 	}
+	console.log(objectPos_x);
 }
 
 //ローカル変数の縮小
