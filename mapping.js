@@ -1,6 +1,7 @@
+// 幅や高さはとりあえず決め打ちなので修正
 const data_width = 450;
 const data_height = 700;
-var objectPos_x = 10;
+var objectPos_x = 20;
 var objectPos_y = 600;
 var global_variable_w = 60;
 var global_variable_h = 40;
@@ -172,7 +173,6 @@ var i = 0;
 var scroll_counter = 1;
 function mapping() {
 	if(i == 0) {
-		console.log("てすと");
 		data_list.shift()();
 	}
 	if(i > 0) {
@@ -182,7 +182,7 @@ function mapping() {
 				if(variable_list.length > 5) {
 					//はみ出たらxを固定
 					objectPos_x = 760;
-					get_width = 350;
+					get_width = 20;
 					get_height = objectPos_y;
 	  			data_list.shift()();
 					scale_variable(0,variable_list,get_width,get_height);
@@ -205,7 +205,7 @@ function mapping() {
 			// 前が空の関数の時だけ呼ばれる
 			} else if(data_att[i] == 4) {
 				if(function_list.length > 1) {
-					objectPos_x = 350;
+					objectPos_x = 20;
 					objectPos_y -= 140;
 					// スクロール
 					if(objectPos_y < 40) {
@@ -215,7 +215,7 @@ function mapping() {
 						data_list.shift()();
 					}
 				} else {
-					objectPos_x += 10;
+					objectPos_x += 340;
 					if(objectPos_x + func_w > data_width) {
 						scrollRectsTo(scroll_counter);
 						lazy_draw();
@@ -225,10 +225,11 @@ function mapping() {
 				}
 			} else if(data_att[i] == 5) {
 				if(variable_list.length > 2) {
-					if(objectPos_x > 350) {
-						local_x = 760;
+					console.log(objectPos_x);
+					if(objectPos_x > 200) {
+						local_x = 480;
 					} else {
-						local_x = 500;
+						local_x = 200;
 					}
 					data_list.shift()();
 					get_width = objectPos_x;
@@ -251,7 +252,7 @@ function mapping() {
 			objectPos_x += 220;
 			// ここにはみ出た時の処理の追加
 			if(objectPos_x > 620) {
-				objectPos_x = 350;
+				objectPos_x = 20;
 				objectPos_y -= 140;
 				// スクロール
 				if(objectPos_y < 0) {
@@ -265,7 +266,7 @@ function mapping() {
 			}
 		//上昇
 		} else if(data_att[i] != data_att[i-1]){
-			objectPos_x = 350;
+			objectPos_x = 20;
 			objectPos_y -= 140;
 			variable_list = [];
 			// スクロール
@@ -282,7 +283,6 @@ function mapping() {
 	if(data_list.length == 0 || data_list.length == 1) {
 		startScroll();
 	}
-	// console.log(objectPos_x);
 }
 
 //ローカル変数の縮小
@@ -295,14 +295,14 @@ function scale_variable(type,data,width,height){
 	}
 	for(count=0; count < data.length; count++){
 		changeSize(data[count],object_width,object_width/2,1000);
-		move(data[count],width + 10,height + 30 ,1000);
+		move(data[count],width + 10,height + 20 ,1000);
 		width += object_width + 2;
 	}
 }
 
 // 遅延実行
 function lazy_draw(){
-	objectPos_x = 350;
+	objectPos_x = 20;
 	objectPos_y = 30;
 	setTimeout( function() {
 		data_list.shift()();
