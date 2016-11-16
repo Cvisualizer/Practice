@@ -1,8 +1,10 @@
 // 幅や高さはとりあえず決め打ちなので修正
 const data_width = 450;
-const data_height = 700;
+// const data_height = 700;
+const data_height = window.innerHeight;
 var objectPos_x = 20;
-var objectPos_y = 600;
+// var objectPos_y = 600;
+var objectPos_y = data_height-100;
 var global_variable_w = 60;
 var global_variable_h = 40;
 var main_func_w = 420;
@@ -17,6 +19,10 @@ var local_x;
 var local_y;
 var get_width;
 var get_height;
+
+var intFrameHeight = window.innerHeight;
+console.log(intFrameHeight);
+
 
 // testdata
 
@@ -269,6 +275,7 @@ function mapping() {
 			objectPos_x = 20;
 			objectPos_y -= 140;
 			variable_list = [];
+			console.log(objectPos_y);
 			// スクロール
 			if(objectPos_y < 0) {
 				scrollRectsTo(scroll_counter);
@@ -295,7 +302,7 @@ function scale_variable(type,data,width,height){
 	}
 	for(count=0; count < data.length; count++){
 		changeSize(data[count],object_width,object_width/2,1000);
-		move(data[count],width + 10,height + 20 ,1000);
+		move(data[count],width + 10,height + 30 ,1000);
 		width += object_width + 2;
 	}
 }
@@ -312,10 +319,10 @@ function lazy_draw(){
 function scrollRectsTo(count){
 	if(data_att[i] == 1) {
 		if(data_att[i-1] == 4 || data_att[i-1] == 5) {
-			move(base, parseInt(base.node.getAttribute("x")), data_height+main_func_h*count-150,200);
+			move(base, parseInt(base.node.getAttribute("x")), data_height+main_func_h*count-100,100);
 		}
 	} else {
-		move(base, parseInt(base.node.getAttribute("x")), data_height+main_func_h*count,200);
+		move(base, parseInt(base.node.getAttribute("x")), data_height+main_func_h*count-50,100);
 	}
 	scroll_counter++;
 }
