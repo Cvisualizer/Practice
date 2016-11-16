@@ -172,6 +172,7 @@ var i = 0;
 var scroll_counter = 1;
 function mapping() {
 	if(i == 0) {
+		console.log("てすと");
 		data_list.shift()();
 	}
 	if(i > 0) {
@@ -281,7 +282,7 @@ function mapping() {
 	if(data_list.length == 0 || data_list.length == 1) {
 		startScroll();
 	}
-	console.log(objectPos_x);
+	// console.log(objectPos_x);
 }
 
 //ローカル変数の縮小
