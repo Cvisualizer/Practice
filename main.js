@@ -15,6 +15,8 @@ pushGlobalMemory("global1");
 pushGlobalMemory("global2");
 //----
 
+
+
 function update(){
-	
+
 }

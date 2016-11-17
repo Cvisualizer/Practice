@@ -19,6 +19,8 @@ var local_x;
 var local_y;
 var get_width;
 var get_height;
+var draw_speed;
+var draw_sec;
 
 var intFrameHeight = window.innerHeight;
 
@@ -54,57 +56,18 @@ function make_dataList(receive_func) {
 	}
 }
 
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ main_func('main') });
-make_dataList(function(){ main_local_variable('mini','red') });
-make_dataList(function(){ main_local_variable('gori','red') });
-make_dataList(function(){ main_local_variable('koro','red') });
-make_dataList(function(){ main_local_variable('test1','red') });
-make_dataList(function(){ main_local_variable('mini','red') });
-make_dataList(function(){ main_local_variable('gori','red') });
-make_dataList(function(){ main_local_variable('koro','red') });
-make_dataList(function(){ main_local_variable('test1','red') });
-make_dataList(function(){ main_local_variable('test2','red') });
-make_dataList(function(){ main_local_variable('test3','red') });
-make_dataList(function(){ main_local_variable('test4','red') });
-make_dataList(function(){ call_func('dara') });
-make_dataList(function(){ local_variable("local","yellow") });
-make_dataList(function(){ local_variable("local","yellow") });
-make_dataList(function(){ local_variable("local","yellow") });
-make_dataList(function(){ local_variable("local","yellow") });
-make_dataList(function(){ call_func('gori') });
-make_dataList(function(){ local_variable("me","yellow") });
-make_dataList(function(){ local_variable("me","yellow") });
-make_dataList(function(){ local_variable("you","yellow") });
-make_dataList(function(){ local_variable("me","yellow") });
-make_dataList(function(){ local_variable("me","yellow") });
-make_dataList(function(){ local_variable("you","yellow") });
-make_dataList(function(){ call_func('doro') });
-make_dataList(function(){ local_variable("you","yellow") });
-make_dataList(function(){ local_variable("you","yellow") });
-make_dataList(function(){ call_func('guro') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('kome','blue') });
-make_dataList(function(){ global_variable('unko','blue') });
-make_dataList(function(){ call_func('doro') });
 
-draw_mapping();
+//　test3.c
+// https://github.com/Cvisualizer/Cvisualizer/blob/master/compiler/test3.c
+make_dataList(function(){ global_variable('*s','blue') });
+make_dataList(function(){ global_variable('*s1 ','blue') });
+make_dataList(function(){ global_variable('*s2','blue') });
+make_dataList(function(){ main_func('main','black') });
+make_dataList(function(){ main_local_variable('a','red') });
+make_dataList(function(){ main_local_variable('b','red') });
+make_dataList(function(){ main_local_variable('c','red') });
+make_dataList(function(){ main_local_variable('*p','red') });
+
 
 function global_variable(name,color){
 	var rect = getRect(objectPos_x,objectPos_y,global_variable_w,global_variable_h,color,1,"",5);
@@ -123,8 +86,8 @@ function global_variable(name,color){
 }
 
 
-function main_func(name) {
-	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,"black",0.9,"black",5);
+function main_func(name,color) {
+	var rect = getRect(objectPos_x,objectPos_y, main_func_w,main_func_h,color,0.9,"black",5);
 	var label =getLabel(objectPos_x,objectPos_y - 5 ,20,"","main","black");
 	addChild(label, rect);
 	addChild(rect, base);
@@ -233,8 +196,9 @@ function mapping() {
 						data_list.shift()();
 					}
 				} else {
-					objectPos_x += 340;
-					if(objectPos_x + func_w > data_width) {
+					console.log(objectPos_x);
+					objectPos_x += func_w + 10;
+					if(objectPos_x > data_width) {
 						scrollRectsTo(scroll_counter);
 						lazy_draw();
 					} else {
@@ -284,7 +248,7 @@ function mapping() {
 		//上昇
 		} else if(data_att[i] != data_att[i-1]){
 			objectPos_x = 20;
-			objectPos_y -= 140;
+			objectPos_y -= 170;
 			variable_list = [];
 			// スクロール
 			if(objectPos_y < 0) {
@@ -297,7 +261,7 @@ function mapping() {
 	}
 	i ++;
 	// ホイールスクロール
-	if(data_list.length == 0 || data_list.length == 1) {
+	if(data_list.length > 2) {
 		startScroll();
 	}
 }
@@ -321,9 +285,10 @@ function scale_variable(type,data,width,height){
 function lazy_draw(){
 	objectPos_x = 20;
 	objectPos_y = 30;
+	var lazy_sec = draw_sec/2*draw_speed
 	setTimeout( function() {
 		data_list.shift()();
-	}, 400);
+	}, lazy_sec );
 }
 
 function scrollRectsTo(count){
@@ -355,7 +320,14 @@ function startScroll() {
 }
 
 // 遅延で描画
-function draw_mapping() {
+// draw_speed = 1
+function draw_mapping(sec,speed=1) {
+	draw_sec = sec
+	if(speed == 2) {
+		draw_speed = 0.5;
+	} else {
+		draw_speed = 1;
+	}
 	call_count = 1
 	var draw_func = setInterval(
 		function() {
@@ -365,6 +337,10 @@ function draw_mapping() {
 			}
 			call_count ++;
 		}
-		, 800
-	)
+		, draw_sec*draw_speed
+	);
 }
+
+// データ構造の描画
+// 第一引数ミリセカンド、第二引数を2に変更すると2倍速
+draw_mapping(800,1);
