@@ -52,17 +52,17 @@ function displayMemories(arr){
 //---- Node addStackArrow(int start, int end, String color) ----
 // 始点・終点を指定して矢印を描画
 function addStackArrow(start, end, color){
-	var x = stackWrapper.offsetLeft-10;
+	var x = stackWrapper.offsetLeft-5;
 	var y = stackWrapper.offsetTop;
-	var arrow = getArrow(x, y+getDisplayY(start)+15, x, y+getDisplayY(end)+15, 3, color||"#aaa");
+	var arrow = getArrow(x, y+getDisplayY(start)+20, x, y+getDisplayY(end)+10, 3, color||"#aaa");
 	stackArrows.push(arrow);
 	return arrow;
 }
 
 function addGlobalArrow(start, end, color){
-	var x = stackWrapper.offsetLeft-10;
+	var x = stackWrapper.offsetLeft-5;
 	var y = stackWrapper.offsetTop;
-	var arrow = getArrow(x, y+getDisplayY(start, true)+15, x, y+getDisplayY(end, true)+15, 3, color||"#aaa");
+	var arrow = getArrow(x, y+getDisplayY(start, true)+20, x, y+getDisplayY(end, true)+10, 3, color||"#aaa");
 	return arrow;
 }
 
