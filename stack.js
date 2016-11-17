@@ -3,6 +3,7 @@ var stack = document.getElementById('stack');
 var stackWrapper = document.getElementById('stackWrapper');
 var globalMemory = document.getElementById('globalMemory');
 var stackArrows = [];
+var isDisplayStackID = true;
 
 //---- Node pushMemory(String str, String textColor, String backgroundColor) ----
 // stackに積む　積んだやつを返す 色の初期値はstack.cssのもの
@@ -15,7 +16,7 @@ function pushMemory(str, textColor, backgroundColor){
 			color: textColor,
 			backgroundColor: backgroundColor
 		},
-		innerHTML: stack.children.length+':'+str
+		innerHTML: (isDisplayStackID ? stack.children.length+':': '')+str
 	});
 	return element;
 }
@@ -25,13 +26,13 @@ function pushMemory(str, textColor, backgroundColor){
 function pushGlobalMemory(str, textColor, backgroundColor){
 	var element = createElement('div', {
 		appendTo: globalMemory,
-		id: globalMemory.children.length,
+		id: "g"+globalMemory.children.length,
 		className: 'memory',
 		style: {
 			color: textColor,
 			backgroundColor: backgroundColor
 		},
-		innerHTML: globalMemory.children.length+':'+str
+		innerHTML: (isDisplayStackID ? globalMemory.children.length+':' : '')+str
 	});
 	return element;
 }
@@ -53,8 +54,15 @@ function displayMemories(arr){
 function addStackArrow(start, end, color){
 	var x = stackWrapper.offsetLeft-10;
 	var y = stackWrapper.offsetTop;
-	var arrow = getArrow(x, y+getDisplayY(start)-20, x, y+getDisplayY(end)-10, 3, color||"#aaa");
+	var arrow = getArrow(x, y+getDisplayY(start)+15, x, y+getDisplayY(end)+15, 3, color||"#aaa");
 	stackArrows.push(arrow);
+	return arrow;
+}
+
+function addGlobalArrow(start, end, color){
+	var x = stackWrapper.offsetLeft-10;
+	var y = stackWrapper.offsetTop;
+	var arrow = getArrow(x, y+getDisplayY(start, true)+15, x, y+getDisplayY(end, true)+15, 3, color||"#aaa");
 	return arrow;
 }
 
@@ -67,19 +75,14 @@ function clearStackArrow(){
 }
 
 //---- int getDisplayY(int id) ----
-// 見える通りの、stackWrapperの上端から、指定したIDの要素の下端との距離を返す
-function getDisplayY(id){
-	return stack.offsetHeight - getY(id) - stackWrapper.scrollTop;
-}
-
-//---- int getY(int id) ----
-// 0番目の要素の下端から、指定したIDの要素の下端との距離を返す
-function getY(id){
-	var sum = 0;
-	for(var i=0; i<id; i++){
-		sum += document.getElementById(i).offsetHeight;
+// 見える通りの、stackWrapperの上端から、指定したIDの要素の上端との距離を返す
+function getDisplayY(id, isGlobal){
+	if(!isGlobal){
+		return document.getElementById(id).offsetTop;
+	} else {
+		if(id[0]=="g") id=id.slice(1);
+		return document.getElementById("g"+id).offsetTop;
 	}
-	return sum;
 }
 
 
