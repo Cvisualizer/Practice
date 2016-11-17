@@ -23,7 +23,7 @@ $(function(){
 	});
 	$(".execButton").mouseup(function(){
 		localStorage.setItem("editting",editor.getValue());
-		execution();
+		//execution();
 		start();
 	});
 	$(".loadButton").mousedown(function(){

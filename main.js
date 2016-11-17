@@ -1,4 +1,4 @@
-
+Math.seedrandom("ORF2016Change");
 //<<<<<<< Updated upstream
 function initDataList(){
 	make_dataList(function(){
