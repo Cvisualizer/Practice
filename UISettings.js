@@ -23,6 +23,8 @@ $(function(){
 	});
 	$(".execButton").mouseup(function(){
 		localStorage.setItem("editting",editor.getValue());
+		execution();
+		start();
 	});
 	$(".loadButton").mousedown(function(){
 		document.getElementById("load").style.backgroundColor="#00506d";
@@ -41,6 +43,16 @@ $(function(){
 	});
 });
 
+
+function execution(){
+	var socket=io.connect("http://127.0.0.1:8000/",function(){
+	//socket.emit('message');
+	});
+	socket.emit('message',editor.getValue());
+	socket.on('greeting',function(data){
+		console.log(data);
+	});
+}
 
 function saveFile(){
 	if(isLoaded==false){

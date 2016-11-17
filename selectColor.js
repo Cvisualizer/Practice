@@ -7,7 +7,7 @@
 var colorSet;
 var colorCount=0;
 const MAX_COLOR_VALUE=500;
-const MIN_COLOR_VALUE=200;
+const MIN_COLOR_VALUE=300;
 
 socket=io.connect("http://133.27.5.14:5324/",function(){
 	//socket.emit('message');
