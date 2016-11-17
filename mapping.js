@@ -59,14 +59,7 @@ function make_dataList(receive_func) {
 
 //　test3.c
 // https://github.com/Cvisualizer/Cvisualizer/blob/master/compiler/test3.c
-make_dataList(function(){ global_variable('*s','blue') });
-make_dataList(function(){ global_variable('*s1 ','blue') });
-make_dataList(function(){ global_variable('*s2','blue') });
-make_dataList(function(){ main_func('main','black') });
-make_dataList(function(){ main_local_variable('a','red') });
-make_dataList(function(){ main_local_variable('b','red') });
-make_dataList(function(){ main_local_variable('c','red') });
-make_dataList(function(){ main_local_variable('*p','red') });
+
 
 
 function global_variable(name,color){
