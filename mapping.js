@@ -21,71 +21,13 @@ var get_width;
 var get_height;
 
 var intFrameHeight = window.innerHeight;
-console.log(intFrameHeight);
 
-
-// testdata
-
-var data_list = [
-	function(){ global_variable('unko','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ main_func('main') },
-	function(){ main_local_variable('mini','red') },
-	function(){ main_local_variable('gori','red') },
-	function(){ main_local_variable('koro','red') },
-	function(){ main_local_variable('test1','red') },
-	function(){ main_local_variable('mini','red') },
-	function(){ main_local_variable('gori','red') },
-	function(){ main_local_variable('koro','red') },
-	function(){ main_local_variable('test1','red') },
-	function(){ main_local_variable('test2','red') },
-	function(){ main_local_variable('test3','red') },
-	function(){ main_local_variable('test4','red') },
-	function(){ call_func('dara') },
-	function(){ local_variable("local","yellow") },
-	function(){ local_variable("local","yellow") },
-	function(){ local_variable("local","yellow") },
-	function(){ local_variable("local","yellow") },
-	function(){ call_func('gori') },
-	function(){ local_variable("me","yellow") },
-	function(){ local_variable("me","yellow") },
-	function(){ local_variable("you","yellow") },
-	function(){ local_variable("me","yellow") },
-	function(){ local_variable("me","yellow") },
-	function(){ local_variable("you","yellow") },
-	function(){ call_func('doro') },
-	function(){ local_variable("you","yellow") },
-	function(){ local_variable("you","yellow") },
-	function(){ call_func('guro') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('kome','blue') },
-	function(){ global_variable('unko','blue') },
-	function(){ call_func('doro') }
-];
-
-
-
-// データの属性
-// 1 -> global_variable, 2 -> main, 3 -> main_local_variable, 4 -> call_func, 5 -> local_variable
-var data_att = [
-	1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,4,5,5,5,5,5,5,4,5,5,4,1,1,1,1,1,1,4
-];
 var data_index = [];
 var pair = {};
 var variable_list = [];
 var function_list = [];
+var data_list = [];
+var data_att = [];
 
 // 外枠(いらないので後で消去)
 //var frame = getRect(10,10,data_width,data_height,"white",1,"black",5);
@@ -93,6 +35,76 @@ var base = getRect(10, data_height, data_width, 10, "black",1);
 var group = svg.g().attr({mask: getRect(10,10,data_width,data_height,"#fff")})
 var labelGroup = svg.g().attr({mask: getRect(10, 10, data_width, data_height, "#fff")});
 
+
+// data_attの属性値の割り当て
+// 1 -> global_variable, 2 -> main, 3 -> main_local_variable, 4 -> call_func, 5 -> local_variable
+function make_dataList(receive_func) {
+	data_list.push(receive_func);
+	var funcName = receive_func.toString();
+	if(funcName.match(/global_variable/)) {
+		data_att.push(1);
+	} else if(funcName.match(/main_local_variable/)) {
+		data_att.push(3);
+	} else if(funcName.match(/main/)) {
+		data_att.push(2);
+	} else if(funcName.match(/call_func/)) {
+		data_att.push(4);
+	} else if(funcName.match(/local_variable/)) {
+		data_att.push(5);
+	}
+}
+
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ main_func('main') });
+make_dataList(function(){ main_local_variable('mini','red') });
+make_dataList(function(){ main_local_variable('gori','red') });
+make_dataList(function(){ main_local_variable('koro','red') });
+make_dataList(function(){ main_local_variable('test1','red') });
+make_dataList(function(){ main_local_variable('mini','red') });
+make_dataList(function(){ main_local_variable('gori','red') });
+make_dataList(function(){ main_local_variable('koro','red') });
+make_dataList(function(){ main_local_variable('test1','red') });
+make_dataList(function(){ main_local_variable('test2','red') });
+make_dataList(function(){ main_local_variable('test3','red') });
+make_dataList(function(){ main_local_variable('test4','red') });
+make_dataList(function(){ call_func('dara') });
+make_dataList(function(){ local_variable("local","yellow") });
+make_dataList(function(){ local_variable("local","yellow") });
+make_dataList(function(){ local_variable("local","yellow") });
+make_dataList(function(){ local_variable("local","yellow") });
+make_dataList(function(){ call_func('gori') });
+make_dataList(function(){ local_variable("me","yellow") });
+make_dataList(function(){ local_variable("me","yellow") });
+make_dataList(function(){ local_variable("you","yellow") });
+make_dataList(function(){ local_variable("me","yellow") });
+make_dataList(function(){ local_variable("me","yellow") });
+make_dataList(function(){ local_variable("you","yellow") });
+make_dataList(function(){ call_func('doro') });
+make_dataList(function(){ local_variable("you","yellow") });
+make_dataList(function(){ local_variable("you","yellow") });
+make_dataList(function(){ call_func('guro') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('kome','blue') });
+make_dataList(function(){ global_variable('unko','blue') });
+make_dataList(function(){ call_func('doro') });
+
+draw_mapping();
 
 function global_variable(name,color){
 	var rect = getRect(objectPos_x,objectPos_y,global_variable_w,global_variable_h,color,1,"",5);
@@ -231,7 +243,6 @@ function mapping() {
 				}
 			} else if(data_att[i] == 5) {
 				if(variable_list.length > 2) {
-					console.log(objectPos_x);
 					if(objectPos_x > 200) {
 						local_x = 480;
 					} else {
@@ -275,7 +286,6 @@ function mapping() {
 			objectPos_x = 20;
 			objectPos_y -= 140;
 			variable_list = [];
-			console.log(objectPos_y);
 			// スクロール
 			if(objectPos_y < 0) {
 				scrollRectsTo(scroll_counter);
@@ -343,24 +353,18 @@ function startScroll() {
 		}
 	});
 }
-// 検索
-function searchTarget(target_num){
-	var target = data_index[target_num]["rect"];
-	changeColor(target,"gold",0.2,1000);
-	if(parseInt(target.node.getAttribute("y")) > data_height) {
-		move(base, 10, parseInt(target.node.getAttribute("y"))-(func_h*(scroll_counter-data_index[target_num]["scroll_num"])),200);
-	}
-}
 
 // 遅延で描画
-call_count = 1
-var draw_func = setInterval(
-	function() {
-		mapping();
-		if(call_count == data_att.length) {
-			clearInterval(draw_func);
+function draw_mapping() {
+	call_count = 1
+	var draw_func = setInterval(
+		function() {
+			mapping();
+			if(call_count == data_att.length) {
+				clearInterval(draw_func);
+			}
+			call_count ++;
 		}
-		call_count ++;
-	}
-	, 800
-)
+		, 800
+	)
+}
