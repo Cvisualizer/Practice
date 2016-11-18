@@ -94,7 +94,7 @@ function getArrowById(id){
 	var returnArrow = null;
 	stackArrows.some(function(arrow){
 		var y = parseInt(arrow.node.getAttribute("d").match(/,(.*?)C/)[1]);
-		if(targetY-20<=y && y<=targetY+20){
+		if(targetY<=y && y<=targetY+30){
 			returnArrow = arrow;
 			return true;
 		}
