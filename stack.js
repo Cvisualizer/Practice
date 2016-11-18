@@ -89,7 +89,7 @@ function clearStackArrow(){
 
 //---- Node getArrowById ----
 // スタックのIDに対応した矢印を探す
-function getArrowById(id){
+function getStackArrowById(id){
 	var targetY = stackWrapper.offsetTop + getDisplayY(id);
 	var returnArrow = null;
 	stackArrows.some(function(arrow){
