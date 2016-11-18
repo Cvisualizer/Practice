@@ -50,7 +50,11 @@ function initDataList(){
 	    pushMemory('p',color[1],color[0]);
 		addStackArrow(3, 1, color[0]);
 	});
-
+	make_dataList(function(){
+		var ele_a = document.getElementById('0');
+		//alert(ele_a);
+		ele_a.innerHTML = "a : 11";
+	});
 }
 //=======
 //<<<<<<< Updated upstream
@@ -62,7 +66,7 @@ function initDataList(){
 //=======
 var animSpan=30;
 var animCount=0;
-var dataAnimLen=8;
+var dataAnimLen=9;
 var isStart=false;
 
 draw_mapping(800,1);
