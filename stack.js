@@ -58,12 +58,25 @@ function addStackArrow(start, end, color){
 	stackArrows.push(arrow);
 	return arrow;
 }
-
+//----
 function addGlobalArrow(start, end, color){
 	var x = stackWrapper.offsetLeft-5;
 	var y = stackWrapper.offsetTop;
 	var arrow = getArrow(x, y+getDisplayY(start, true)+20, x, y+getDisplayY(end, true)+10, 3, color||"#aaa");
 	return arrow;
+}
+
+//---- move Arrow
+function moveStackArrow(targetArrow, start, end){
+	var x = stackWrapper.offsetLeft-5;
+	var y = stackWrapper.offsetTop;
+	targetArrow.transform(x, y+getDisplayY(start)+20, x, y+getDisplayY(end)+10, 3, 100);
+}
+//----
+function moveGlobalArrow(targetArrow, start, end){
+	var x = stackWrapper.offsetLeft-5;
+	var y = stackWrapper.offsetTop;
+	targetArrow.transform(x, y+getDisplayY(start, true)+20, x, y+getDisplayY(end, true)+10, 3, 100);
 }
 
 //---- void clearStackArrow() ----
@@ -72,6 +85,12 @@ function clearStackArrow(){
 	stackArrows.forEach(function(arw){
 		arw.remove();
 	});
+}
+
+//---- rewriteMemory
+//
+function rewriteMemory(id, str){
+	document.getElementById(id).innerHTML = str;
 }
 
 //---- int getDisplayY(int id) ----
