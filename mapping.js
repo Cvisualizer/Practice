@@ -53,7 +53,7 @@ function make_dataList(receive_func) {
 		data_att.push(4);
 	} else if(funcName.match(/local_variable/)) {
 		data_att.push(5);
-	}
+	} 
 }
 
 
@@ -222,6 +222,8 @@ function mapping() {
 					local_x += 60;
 					data_list.shift()();
 				}
+      } else{ 
+      	data_list.shift()();
       }
     // ローカル変数の最初の描画
     } else if(data_att[i] == 3 || data_att[i] == 5) {
@@ -260,6 +262,9 @@ function mapping() {
 				data_list.shift()();
 			}
 		}
+		else{ 
+      		data_list.shift()();
+      	}
 	}
 	i ++;
 	// ホイールスクロール
